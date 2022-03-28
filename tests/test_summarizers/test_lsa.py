@@ -57,7 +57,7 @@ def test_single_sentence():
 
     sentences = summarizer(document, 10)
     assert len(sentences) == 1
-    assert to_unicode(sentences[0]) == "I am the sentence you like"
+    assert to_unicode(sentences[0].sentence) == "I am the sentence you like"
 
 
 def test_document():
@@ -72,8 +72,8 @@ def test_document():
 
     sentences = summarizer(document, 2)
     assert len(sentences) == 2
-    assert to_unicode(sentences[0]) == "I am the sentence you like"
-    assert to_unicode(sentences[1]) == "This sentence is better than that above"
+    assert to_unicode(sentences[0].sentence) == "I am the sentence you like"
+    assert to_unicode(sentences[1].sentence) == "This sentence is better than that above"
 
 
 def test_real_example():

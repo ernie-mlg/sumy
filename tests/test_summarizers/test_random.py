@@ -25,7 +25,7 @@ def test_less_sentences_than_requested():
 
     sentences = summarizer(document, 10)
     assert len(sentences) == 1
-    assert to_unicode(sentences[0]) == "This is only one sentence."
+    assert to_unicode(sentences[0].sentence) == "This is only one sentence."
 
 
 def test_sentences_in_right_order():
@@ -39,9 +39,9 @@ def test_sentences_in_right_order():
 
     sentences = summarizer(document, 4)
     assert len(sentences) == 3
-    assert to_unicode(sentences[0]) == "First sentence."
-    assert to_unicode(sentences[1]) == "Second sentence."
-    assert to_unicode(sentences[2]) == "Third sentence."
+    assert to_unicode(sentences[0].sentence) == "First sentence."
+    assert to_unicode(sentences[1].sentence) == "Second sentence."
+    assert to_unicode(sentences[2].sentence) == "Third sentence."
 
 
 def test_more_sentences_than_requested():
@@ -94,4 +94,4 @@ def test_less_than_10_words_should_be_returned():
         return results
 
     sentences = summarizer(document, partial(count, 10))
-    assert 0 < sum(len(s.words) for s in sentences) <= 10
+    assert 0 < sum(len(s.sentence.words) for s in sentences) <= 10

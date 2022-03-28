@@ -142,7 +142,7 @@ def test_the_sentences_should_be_in_different_order(summarizer):
     document = build_document(*paragraphs)
     reversed_document = build_document(*(reversed(p) for p in reversed(paragraphs)))
 
-    sentences = summarizer(document, "100%")
-    reversed_sentences = summarizer(reversed_document, "100%")
+    sentences = [s.sentence for s in summarizer(document, "100%")]
+    reversed_sentences = [s.sentence for s in summarizer(reversed_document, "100%")]
 
-    assert tuple(reversed(sentences)) == reversed_sentences
+    assert list(reversed(sentences)) == reversed_sentences

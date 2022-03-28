@@ -48,8 +48,8 @@ def test_two_sentences():
 
     returned = summarizer(document, 10)
     assert len(returned) == 2
-    assert to_unicode(returned[0]) == "I am that 1. sentence"
-    assert to_unicode(returned[1]) == "And I am 2. winning prize"
+    assert to_unicode(returned[0].sentence) == "I am that 1. sentence"
+    assert to_unicode(returned[1].sentence) == "And I am 2. winning prize"
 
 
 def test_stop_words_correctly_removed():

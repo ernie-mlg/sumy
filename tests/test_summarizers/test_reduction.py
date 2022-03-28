@@ -33,8 +33,8 @@ def test_two_sentences():
 
     returned = summarizer(document, 10)
     assert len(returned) == 2
-    assert to_unicode(returned[0]) == "I am that 1. sentence"
-    assert to_unicode(returned[1]) == "And I am 2. winning prize"
+    assert to_unicode(returned[0].sentence) == "I am that 1. sentence"
+    assert to_unicode(returned[1].sentence) == "And I am 2. winning prize"
 
 
 def test_stop_words_correctly_removed():
@@ -77,7 +77,7 @@ def test_three_sentences_but_second_winner():
 
     returned = summarizer(document, 1)
     assert len(returned) == 1
-    assert to_unicode(returned[0]) == "And I am 2. sentence - winning sentence"
+    assert to_unicode(returned[0].sentence) == "And I am 2. sentence - winning sentence"
 
 
 def test_sentences_rating():

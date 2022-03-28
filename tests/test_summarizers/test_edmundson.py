@@ -64,7 +64,7 @@ def test_mixed_cue_key():
     summarizer.bonus_words = ("cool", "heading", "sentence", "words", "like", "because")
     summarizer.stigma_words = ("this", "is", "I", "am", "and",)
 
-    sentences = summarizer(document, 2)
+    sentences = [s.sentence for s in summarizer(document, 2)]
 
     assert list(map(to_unicode, sentences)) == [
         "Because I am sentence I like words",
@@ -115,7 +115,7 @@ def test_cue_letters_case():
     summarizer.bonus_words = ("X", "w",)
     summarizer.stigma_words = ("stigma",)
 
-    sentences = summarizer.cue_method(document, 2)
+    sentences = [s.sentence for s in summarizer.cue_method(document, 2)]
 
     assert list(map(to_unicode, sentences)) == [
         "x x x x",
@@ -132,7 +132,7 @@ def test_cue_1():
     summarizer.bonus_words = ("ba", "bb", "bc",)
     summarizer.stigma_words = ("sa", "sb", "sc",)
 
-    sentences = summarizer.cue_method(document, 10)
+    sentences = [s.sentence for s in summarizer.cue_method(document, 10)]
 
     assert len(sentences) == 1
 
@@ -147,14 +147,14 @@ def test_cue_2():
     summarizer.bonus_words = ("ba", "bb", "bc",)
     summarizer.stigma_words = ("sa", "sb", "sc",)
 
-    sentences = summarizer.cue_method(document, 10)
+    sentences = [s.sentence for s in summarizer.cue_method(document, 10)]
 
     assert list(map(to_unicode, sentences)) == [
         "ba bb bc bb unknown ľščťžýáíé sb sc sb",
         "Pepek likes spinach",
     ]
 
-    sentences = summarizer.cue_method(document, 1)
+    sentences = [s.sentence for s in summarizer.cue_method(document, 1)]
 
     assert list(map(to_unicode, sentences)) == [
         "ba bb bc bb unknown ľščťžýáíé sb sc sb",
@@ -180,7 +180,7 @@ def test_cue_3():
     summarizer.bonus_words = ("ba", "bb", "bc",)
     summarizer.stigma_words = ("sa", "sb", "sc",)
 
-    sentences = summarizer.cue_method(document, 5)
+    sentences = [s.sentence for s in summarizer.cue_method(document, 5)]
 
     assert list(map(to_unicode, sentences)) == [
         ("ba "*10).strip(),
@@ -215,7 +215,7 @@ def test_key_no_bonus_words_in_document():
     summarizer = EdmundsonSummarizer()
     summarizer.bonus_words = ("ba", "bb", "bc", "bonus",)
 
-    sentences = summarizer.key_method(document, 10)
+    sentences = [s.sentence for s in summarizer.key_method(document, 10)]
 
     assert list(map(to_unicode, sentences)) == [
         "wa wb wc wd",
@@ -232,7 +232,7 @@ def test_key_1():
     summarizer = EdmundsonSummarizer()
     summarizer.bonus_words = ("ba", "bb", "bc", "bonus",)
 
-    sentences = summarizer.key_method(document, 1)
+    sentences = [s.sentence for s in summarizer.key_method(document, 1)]
 
     assert list(map(to_unicode, sentences)) == [
         "This is test sentence with some extra words and bonus",
@@ -247,7 +247,7 @@ def test_key_2():
     summarizer = EdmundsonSummarizer()
     summarizer.bonus_words = ("nom", "bonus",)
 
-    sentences = summarizer.key_method(document, 2)
+    sentences = [s.sentence for s in summarizer.key_method(document, 2)]
 
     assert list(map(to_unicode, sentences)) == [
         "Om nom nom nom nom",
@@ -263,14 +263,14 @@ def test_key_3():
     summarizer = EdmundsonSummarizer()
     summarizer.bonus_words = ("wa", "X",)
 
-    sentences = summarizer.key_method(document, 3)
+    sentences = [s.sentence for s in summarizer.key_method(document, 3)]
     assert list(map(to_unicode, sentences)) == [
         "wa wa wa",
         "wa wa wa wa",
         "wa Wa Wa Wa wa",
     ]
 
-    sentences = summarizer.key_method(document, 3, weight=0)
+    sentences = [s.sentence for s in summarizer.key_method(document, 3, weight=0)]
     assert list(map(to_unicode, sentences)) == [
         "wa wa wa wa",
         "wa Wa Wa Wa wa",
@@ -302,7 +302,7 @@ def test_title_method_without_title():
     summarizer = EdmundsonSummarizer()
     summarizer.null_words = ("this", "is", "some", "and",)
 
-    sentences = summarizer.title_method(document, 10)
+    sentences = [s.sentence for s in summarizer.title_method(document, 10)]
     assert list(map(to_unicode, sentences)) == [
         "This is sentence",
         "This is another one",
@@ -324,7 +324,7 @@ def test_title_method_1():
     summarizer = EdmundsonSummarizer()
     summarizer.null_words = ("this", "is", "I", "am", "and",)
 
-    sentences = summarizer.title_method(document, 1)
+    sentences = [s.sentence for s in summarizer.title_method(document, 1)]
 
     assert list(map(to_unicode, sentences)) == [
         "Here is the winner because contains words like cool and heading",
@@ -345,7 +345,7 @@ def test_title_method_2():
     summarizer = EdmundsonSummarizer()
     summarizer.null_words = ("this", "is", "I", "am", "and",)
 
-    sentences = summarizer.title_method(document, 2)
+    sentences = [s.sentence for s in summarizer.title_method(document, 2)]
 
     assert list(map(to_unicode, sentences)) == [
         "This is next paragraph because of blank line above",
@@ -367,7 +367,7 @@ def test_title_method_3():
     summarizer = EdmundsonSummarizer()
     summarizer.null_words = ("this", "is", "I", "am", "and",)
 
-    sentences = summarizer.title_method(document, 3)
+    sentences = [s.sentence for s in summarizer.title_method(document, 3)]
 
     assert list(map(to_unicode, sentences)) == [
         "Because I am sentence I like words",
@@ -411,6 +411,7 @@ def test_location_method_1():
     summarizer.null_words = ("na", "nb", "nc", "nd", "ne",)
 
     sentences = summarizer.location_method(document, 4)
+    sentences = [s.sentence for s in summarizer.location_method(document, 4)]
 
     assert list(map(to_unicode, sentences)) == [
         "ha = 1 + 1 + 1 = 3",
@@ -439,7 +440,7 @@ def test_location_method_2():
     summarizer = EdmundsonSummarizer()
     summarizer.null_words = ("na", "nb", "nc", "nd", "ne",)
 
-    sentences = summarizer.location_method(document, 4, w_p1=0, w_p2=0)
+    sentences = [s.sentence for s in summarizer.location_method(document, 4, w_p1=0, w_p2=0)]
 
     assert list(map(to_unicode, sentences)) == [
         "ha hb = 2 + 1 + 0 = 3",

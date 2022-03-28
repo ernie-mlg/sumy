@@ -15,7 +15,7 @@ def test_empty_document():
     document = build_document()
     summarizer = LuhnSummarizer()
 
-    returned = summarizer(document, 10)
+    returned = [s.sentence for s in summarizer(document, 10)]
     assert len(returned) == 0
 
 
@@ -24,7 +24,7 @@ def test_single_sentence():
     summarizer = LuhnSummarizer()
     summarizer.stop_words = ("já", "jsem",)
 
-    returned = summarizer(document, 10)
+    returned = [s.sentence for s in summarizer(document, 10)]
     assert len(returned) == 1
 
 
@@ -33,7 +33,7 @@ def test_two_sentences():
     summarizer = LuhnSummarizer()
     summarizer.stop_words = ("já", "jsem", "a", "ta",)
 
-    returned = summarizer(document, 10)
+    returned = [s.sentence for s in summarizer(document, 10)]
     assert list(map(to_unicode, returned)) == [
         "Já jsem 1. věta",
         "A já ta 2. vítězná výhra",
@@ -48,7 +48,7 @@ def test_two_sentences_but_one_winner():
     summarizer = LuhnSummarizer()
     summarizer.stop_words = ("já", "jsem", "a", "ta",)
 
-    returned = summarizer(document, 1)
+    returned = [s.sentence for s in summarizer(document, 1)]
     assert list(map(to_unicode, returned)) == [
         "A já ta 2. vítězná věta",
     ]
@@ -63,18 +63,18 @@ def test_three_sentences():
     summarizer = LuhnSummarizer()
     summarizer.stop_words = ("s",)
 
-    returned = summarizer(document, 1)
+    returned = [s.sentence for s in summarizer(document, 1)]
     assert list(map(to_unicode, returned)) == [
         "wb s wb s wb s s s s s s s s s wb",
     ]
 
-    returned = summarizer(document, 2)
+    returned = [s.sentence for s in summarizer(document, 2)]
     assert list(map(to_unicode, returned)) == [
         "wb s wb s wb s s s s s s s s s wb",
         "wc s s wc s s wc",
     ]
 
-    returned = summarizer(document, 3)
+    returned = [s.sentence for s in summarizer(document, 3)]
     assert list(map(to_unicode, returned)) == [
         "wa s s s wa s s s wa",
         "wb s wb s wb s s s s s s s s s wb",
@@ -94,18 +94,18 @@ def test_various_words_with_significant_percentage():
     summarizer = LuhnSummarizer()
     summarizer.stop_words = ("1", "2", "3", "4", "5", "6")
 
-    returned = summarizer(document, 1)
+    returned = [s.sentence for s in summarizer(document, 1)]
     assert list(map(to_unicode, returned)) == [
         "6 e e e e e",
     ]
 
-    returned = summarizer(document, 2)
+    returned = [s.sentence for s in summarizer(document, 2)]
     assert list(map(to_unicode, returned)) == [
         "5 z z z z",
         "6 e e e e e",
     ]
 
-    returned = summarizer(document, 3)
+    returned = [s.sentence for s in summarizer(document, 3)]
     assert list(map(to_unicode, returned)) == [
         "3 c c c",
         "5 z z z z",
@@ -126,7 +126,7 @@ def test_real_example():
     summarizer = LuhnSummarizer(stem_word)
     summarizer.stop_words = get_stop_words("czech")
 
-    returned = summarizer(parser.document, 2)
+    returned = [s.sentence for s in summarizer(parser.document, 2)]
     assert list(map(to_unicode, returned)) == [
         "Jednalo se o případ chlapce v 6. třídě, který měl problémy s učením.",
         "Připadal si, že je mezi malými dětmi a realizoval se tím, že si ve třídě o rok mladších dětí budoval vedoucí pozici.",

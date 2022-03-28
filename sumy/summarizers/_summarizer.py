@@ -50,4 +50,4 @@ class AbstractSummarizer(object):
         # sort sentences by their order in document
         infos = sorted(infos, key=attrgetter("order"))
 
-        return tuple(i.sentence for i in infos)
+        return infos
